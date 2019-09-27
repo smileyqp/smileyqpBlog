@@ -16,15 +16,18 @@
     
     
 
-    <meta name="keywords" content="translate">
+    <meta name="description" content="ES5中继承的实现：1234567891011121314151617//ES5中的思路是将子类的原型设置成为父类的原型function Super()&amp;#123;	Super.prototype.getNum = function()&amp;#123;		return 1;	&amp;#125;&amp;#125;function Sub()&amp;#123;&amp;#125;	let s = new Sub();	Sub.pr">
+<meta name="keywords" content="translate">
 <meta property="og:type" content="article">
 <meta property="og:title" content="smileDemo | Smileyqp&#39;s Blog">
 <meta property="og:url" content="http://github.com/smileyqp/2019/06/29/smileDemo/index.html">
 <meta property="og:site_name" content="Smileyqp&#39;s Blog">
+<meta property="og:description" content="ES5中继承的实现：1234567891011121314151617//ES5中的思路是将子类的原型设置成为父类的原型function Super()&amp;#123;	Super.prototype.getNum = function()&amp;#123;		return 1;	&amp;#125;&amp;#125;function Sub()&amp;#123;&amp;#125;	let s = new Sub();	Sub.pr">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-27T07:49:12.614Z">
+<meta property="og:updated_time" content="2019-09-27T08:54:29.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="smileDemo | Smileyqp&#39;s Blog">
+<meta name="twitter:description" content="ES5中继承的实现：1234567891011121314151617//ES5中的思路是将子类的原型设置成为父类的原型function Super()&amp;#123;	Super.prototype.getNum = function()&amp;#123;		return 1;	&amp;#125;&amp;#125;function Sub()&amp;#123;&amp;#125;	let s = new Sub();	Sub.pr">
     
     
     
@@ -179,7 +182,14 @@ classes that you can use:
   </header>
 
   <section id="post-content" class="article-content post">
-    
+    <h5 id="ES5中继承的实现："><a href="#ES5中继承的实现：" class="headerlink" title="ES5中继承的实现："></a>ES5中继承的实现：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//ES5中的思路是将子类的原型设置成为父类的原型</span><br><span class="line">function Super()&#123;</span><br><span class="line">	Super.prototype.getNum = function()&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">function Sub()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">	let s = new Sub();</span><br><span class="line">	Sub.prototype = Object.create(Super.prototype,&#123;</span><br><span class="line">		constructor:&#123;</span><br><span class="line">			value:Sub,</span><br><span class="line">			writeable:true</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+
+<h6 id="另外案例："><a href="#另外案例：" class="headerlink" title="另外案例："></a>另外案例：</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// Shape - 父类(superclass)</span><br><span class="line">function Shape() &#123;</span><br><span class="line">  this.x = 0;</span><br><span class="line">  this.y = 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 父类的方法move</span><br><span class="line">Shape.prototype.move = function(x, y) &#123;</span><br><span class="line">  this.x += x;</span><br><span class="line">  this.y += y;</span><br><span class="line">  console.info('Shape moved.');</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// Rectangle - 子类(subclass)</span><br><span class="line">function Rectangle() &#123;</span><br><span class="line">  Shape.call(this); // call super constructor.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 子类续承父类；子类的prototype指向父类的prototype</span><br><span class="line"></span><br><span class="line">Rectangle.prototype = Object.create(Shape.prototype);</span><br><span class="line">Rectangle.prototype.constructor = Rectangle;</span><br><span class="line"></span><br><span class="line">//实例化子类对象</span><br><span class="line">var rect = new Rectangle();</span><br><span class="line"></span><br><span class="line">console.log('Is rect an instance of Rectangle?',</span><br><span class="line">  rect instanceof Rectangle); // true</span><br><span class="line">console.log('Is rect an instance of Shape?',</span><br><span class="line">  rect instanceof Shape); // true</span><br><span class="line">rect.move(1, 1); // Outputs, 'Shape moved.'</span><br></pre></td></tr></table></figure>
+
+<h6 id="Object-create-方法创建一个新对象，其作用是使用现有的对象来提供新创建的对象的proto，语法："><a href="#Object-create-方法创建一个新对象，其作用是使用现有的对象来提供新创建的对象的proto，语法：" class="headerlink" title="Object.create()方法创建一个新对象，其作用是使用现有的对象来提供新创建的对象的proto，语法："></a>Object.create()方法创建一个新对象，其作用是使用现有的对象来提供新创建的对象的<strong>proto</strong>，语法：</h6><p><code>Object.create(proto[, propertiesObject])</code></p>
+<h5 id="ES6中直接用class-…-extends即可"><a href="#ES6中直接用class-…-extends即可" class="headerlink" title="ES6中直接用class … extends即可"></a>ES6中直接用class … extends即可</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class MyDate extends Date()&#123;</span><br><span class="line">	test()&#123;</span><br><span class="line">		return this.getTime();	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">let myDate = new MyDate();</span><br><span class="line">myDate.test();</span><br></pre></td></tr></table></figure>
+
+
   </section>
 
   <section class="post-comments">
