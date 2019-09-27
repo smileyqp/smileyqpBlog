@@ -1,6 +1,6 @@
 ---
-title: smileDemo
-date: 2019-06-29 10:59:55
+title: （一）从 URL 输入到页面展现背后发生的事
+date: 2019-08-27 10:59:55
 tags:
 - translate
 category:
@@ -10,72 +10,30 @@ category:
 
 
 
+> ##### 基本概念
+> - URL（Uniform Resource Locator 统一资源定位符
+> - 常见的协议有：http（最常见的网络传输协议）、https（进行加密的网络传输协议）、file（本地文件夹协议）、ftp、telnet 
+> -  DNS（Domain Name System 域名系统）——用来记录域名和 IP 地址相互映射的信息。
+> ##### 基本流程概述
+>  - 输入URL
+>  - 浏览器查找域名对应的 IP 地址
+>    - 查找浏览器缓存
+>    - 查找系统缓存
+>    - 查找路由器缓存
+>    - 查找 ISP DNS 缓存
+> 
+> - 浏览器根据 IP 地址与服务器建立联系;web server处理请求
+> - 浏览器与服务器通信
+>    - 服务器返回了 html 字符串给浏览器，此时，浏览器将会对其进行解析、渲染并最终绘制网页
+>    - 加载（自上而下对html 页面加载；同时进行解析、渲染处理；遇到 link 标签、image 标签、script 标签时，再次请求获取资源）
+>    - 解析、渲染(生成 dom 树;并且将dom树可视化处理)
+>    - 绘制网页
 
-##### ES5中继承的实现：
-```shell
-//ES5中的思路是将子类的原型设置成为父类的原型
-function Super(){
-	Super.prototype.getNum = function(){
-		return 1;
-	}
-}
-function Sub(){
-
-}
-
-	let s = new Sub();
-	Sub.prototype = Object.create(Super.prototype,{
-		constructor:{
-			value:Sub,
-			writeable:true
-		}
-	})
-```
-###### 另外案例：
-```shell
-// Shape - 父类(superclass)
-function Shape() {
-  this.x = 0;
-  this.y = 0;
-}
-
-// 父类的方法move
-Shape.prototype.move = function(x, y) {
-  this.x += x;
-  this.y += y;
-  console.info('Shape moved.');
-};
-
-// Rectangle - 子类(subclass)
-function Rectangle() {
-  Shape.call(this); // call super constructor.
-}
-
-// 子类续承父类；子类的prototype指向父类的prototype
-
-Rectangle.prototype = Object.create(Shape.prototype);
-Rectangle.prototype.constructor = Rectangle;
-
-//实例化子类对象
-var rect = new Rectangle();
-
-console.log('Is rect an instance of Rectangle?',
-  rect instanceof Rectangle); // true
-console.log('Is rect an instance of Shape?',
-  rect instanceof Shape); // true
-rect.move(1, 1); // Outputs, 'Shape moved.'
-```
-###### Object.create()方法创建一个新对象，其作用是使用现有的对象来提供新创建的对象的__proto__，语法：
-`Object.create(proto[, propertiesObject])`
-
-##### ES6中直接用class ... extends即可
-```shell
-class MyDate extends Date(){
-	test(){
-		return this.getTime();	
-	}
-}
-let myDate = new MyDate();
-myDate.test();
-```
-
+> 开始基础巩固整理自我提升！Fighting！
+> ##### 简而言之：
+> - 输入网址回车
+> - 域名解析到对应IP
+> - 服务器webserver处理请求
+> - 返回html字符串
+> - 浏览器解析渲染
+> - 遇到link、image、script等继续请求返回
